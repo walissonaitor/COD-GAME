@@ -1,0 +1,55 @@
+Initialize engine version: 5.6.0f3 (497a0f351392)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: Intel(R) HD Graphics (ID=0x152)
+    Vendor:   Intel
+    VRAM:     880 MB
+    Driver:   10.18.10.4425
+Begin MonoManager ReloadAssembly
+Platform assembly: E:\CODÔ by Magma\codô teste_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading E:\CODÔ by Magma\codô teste_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: E:\CODÔ by Magma\codô teste_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading E:\CODÔ by Magma\codô teste_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: E:\CODÔ by Magma\codô teste_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading E:\CODÔ by Magma\codô teste_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+Platform assembly: E:\CODÔ by Magma\codô teste_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading E:\CODÔ by Magma\codô teste_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: E:\CODÔ by Magma\codô teste_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading E:\CODÔ by Magma\codô teste_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.036 seconds
+Platform assembly: E:\CODÔ by Magma\codô teste_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: E:\CODÔ by Magma\codô teste_Data\Managed\System.dll (this message is harmless)
+Platform assembly: E:\CODÔ by Magma\codô teste_Data\Managed\UnityScript.dll (this message is harmless)
+desktop: 1440x900 60Hz; virtual: 1440x900 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.226385 ms
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.619927 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 582.
+Total: 0.338346 ms (FindLiveObjects: 0.043616 ms CreateObjectMapping: 0.047144 ms MarkObjects: 0.235720 ms  DeleteObjects: 0.011224 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.896664 ms
+
+Unloading 23 unused Assets to reduce memory usage. Loaded Objects now: 987.
+Total: 0.566690 ms (FindLiveObjects: 0.072159 ms CreateObjectMapping: 0.038164 ms MarkObjects: 0.425578 ms  DeleteObjects: 0.030146 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.760397 ms
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 987.
+Total: 0.618965 ms (FindLiveObjects: 0.072800 ms CreateObjectMapping: 0.036881 ms MarkObjects: 0.504473 ms  DeleteObjects: 0.003527 ms)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.857892 ms
+
+Unloading 63 unused Assets to reduce memory usage. Loaded Objects now: 584.
+Total: 0.562521 ms (FindLiveObjects: 0.047785 ms CreateObjectMapping: 0.036560 ms MarkObjects: 0.336742 ms  DeleteObjects: 0.140469 ms)
+
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 16fc -> priority: 1 
+  Thread -> id: 14d0 -> priority: 1 

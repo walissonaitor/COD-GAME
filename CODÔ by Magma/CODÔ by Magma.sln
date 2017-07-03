@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CODÔ by Magma", "Assembly-CSharp.csproj", "{ECA2D5EF-65A8-3DDA-356C-0B0DC5639DF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CODÔ by Magma", "Assembly-CSharp-Editor.csproj", "{AADBE84E-C23D-9DE2-C194-9784F4196A0A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ECA2D5EF-65A8-3DDA-356C-0B0DC5639DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECA2D5EF-65A8-3DDA-356C-0B0DC5639DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECA2D5EF-65A8-3DDA-356C-0B0DC5639DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECA2D5EF-65A8-3DDA-356C-0B0DC5639DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AADBE84E-C23D-9DE2-C194-9784F4196A0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AADBE84E-C23D-9DE2-C194-9784F4196A0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AADBE84E-C23D-9DE2-C194-9784F4196A0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AADBE84E-C23D-9DE2-C194-9784F4196A0A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
