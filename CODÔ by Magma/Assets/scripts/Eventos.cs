@@ -9,11 +9,14 @@ public class Eventos : MonoBehaviour {
     public bool evento = false;
     public int idEvento;
     public UIGamePlay uIGamePlay;
-    public Text textos;
+    public GameObject falasEntrou;
+    private GameController gameController;
 
     // Use this for initialization
     void Start () {
         uIGamePlay = FindObjectOfType(typeof(UIGamePlay)) as UIGamePlay;
+        gameController = FindObjectOfType(typeof(GameController)) as GameController;
+        falasEntrou.SetActive(false);
     }
 
     float tempo = 0;
@@ -23,36 +26,38 @@ public class Eventos : MonoBehaviour {
     {
         if (evento == true) {
             tempo += Time.deltaTime;
-            if (tempo < duracao)
-            {
-                textos.gameObject.SetActive(true);
-                textos.text = "Clique E para interagir com o NPC";
+                if (gameController.CurrentState == StateMachine.INGAME)
+                {
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        uIGamePlay.EntrarQuest(idEvento - 1);
+                        PlayerPrefs.SetInt("ULTIMAFASE", idEvento);
+                        PlayerPrefs.SetInt("USOUE", 1);
+                    }
+                }
             }
-            else if (tempo > duracao && tempo < duracao + 1)
-            {
-                textos.gameObject.SetActive(false);
-            }
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                textos.gameObject.SetActive(false);
-                uIGamePlay.EntrarQuest(idEvento-1);
-                PlayerPrefs.SetInt("ULTIMAFASE", idEvento);
-            }
-        }
-	}
+	    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-            if (other.tag == "Player")
+        if (other.tag == "Player")
+        {
+            if (PlayerPrefs.GetInt("USOUE") == 0)
             {
-            evento = true;
+                falasEntrou.SetActive(true);   
             }
+            evento = true;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
+            if (PlayerPrefs.GetInt("USOUE") == 0)
+            {
+                falasEntrou.SetActive(false); 
+            }
             evento = false;
         }
     }

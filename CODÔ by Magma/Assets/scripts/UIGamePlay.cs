@@ -56,10 +56,12 @@ public class UIGamePlay : MonoBehaviour {
     [Header("Paineis")]
     public GameObject painelQuest;
     public GameObject painelGame;
-    public GameObject[] fases;
     public Button executar;
     public Button parar;
     public Button voltar;
+    public GameObject voltarPainel;
+    public Button voltarSim;
+    public Button voltarNao;
     public InputField textosM, textosF1, textosF2;
     public GameObject lateral;
     [Space(20)]
@@ -81,8 +83,19 @@ public class UIGamePlay : MonoBehaviour {
     public Button BotaoCarSim;
     public Button BotaoCarNao;
 
-    public GameObject mapa1;
+    public Text salvoPrefText;
+    public Text salvoText;
+    private bool salvo;
+    private bool salvoPref;
+
     public GameObject mapa2;
+    public GameObject [] mapa1;
+
+    public GameObject Quest1;
+    public GameObject Quest2;
+    public GameObject Quest3;
+
+    public Text comandos;
 
     private string nomeDaCena;
     private float VOLUMESOM;
@@ -195,6 +208,13 @@ public class UIGamePlay : MonoBehaviour {
         BotaoSairNao.onClick = new Button.ButtonClickedEvent();
         BotaoSalSim.onClick = new Button.ButtonClickedEvent();
         BotaoSalNao.onClick = new Button.ButtonClickedEvent();
+        voltarNao.onClick = new Button.ButtonClickedEvent();
+        voltarSim.onClick = new Button.ButtonClickedEvent();
+        voltar.onClick = new Button.ButtonClickedEvent();
+
+        voltarSim.onClick.AddListener(() => SairQuest());
+        voltarSim.onClick.AddListener(() => Voltar(false));
+        voltar.onClick.AddListener(() => Voltar(true));
 
         BotaoVoltarCarregar.onClick.AddListener(() => Carregar(false));
         BotaoVoltarSalvar.onClick.AddListener(() => Salvar(false));
@@ -239,11 +259,33 @@ public class UIGamePlay : MonoBehaviour {
         PlayerPrefs.SetFloat("VOLUMEMUSICA", BarraVolumeMusica.value);
         PlayerPrefs.SetInt("modoJanela", modoJanelaAtivo);
         AplicarPreferencias();
+        StartCoroutine("SalvoPref");
     }
     private void AplicarPreferencias()
     {
         VOLUMESOM = PlayerPrefs.GetFloat("VOLUMESOM");
         VOLUMEMUSICA = PlayerPrefs.GetFloat("VOLUMEMUSICA");
+        if (PlayerPrefs.HasKey("modoJanela"))
+        {
+            modoJanelaAtivo = PlayerPrefs.GetInt("modoJanela");
+            if (modoJanelaAtivo == 1)
+            {
+                Screen.fullScreen = false;
+                CaixaModoJanela.isOn = true;
+            }
+            else
+            {
+                Screen.fullScreen = true;
+                CaixaModoJanela.isOn = false;
+            }
+        }
+        else
+        {
+            modoJanelaAtivo = 0;
+            PlayerPrefs.SetInt("modoJanela", modoJanelaAtivo);
+            CaixaModoJanela.isOn = false;
+            Screen.fullScreen = true;
+        }
     }
 
     private void Opcoes(bool ativarOP)
@@ -293,11 +335,39 @@ public class UIGamePlay : MonoBehaviour {
         textosF1.gameObject.SetActive(true);
         painelGame.SetActive(false);
         painelQuest.SetActive(true);
-        fases[idQuest].SetActive(true);
         BotaoPause.gameObject.SetActive(false);
         lateral.gameObject.SetActive(true);
-        mapa1.SetActive(true);
         mapa2.SetActive(false);
+        for(int i = 0; i < mapa1.Length; i++)
+        {
+            mapa1[i].SetActive(false);
+        }
+        mapa1[idQuest].SetActive(true);
+
+        if (idQuest == 0)
+        {
+            Quest1.SetActive(true);
+            Quest2.SetActive(false);
+            Quest3.SetActive(false);
+            comandos.text = "Seus Comandos:\n* Andar();\n*Pegar(); ";
+        } else if (idQuest == 1)
+        {
+            Quest1.SetActive(false);
+            Quest2.SetActive(true);
+            Quest3.SetActive(false);
+            comandos.text = "Seus Comandos:\n* Andar();\n*Virar('Esquerda');\n*Virar('Direita');\n*Pegar(); ";
+        } else if (idQuest == 2)
+        {
+            Quest1.SetActive(false);
+            Quest2.SetActive(false);
+            Quest3.SetActive(true);
+            comandos.text = "Seus Comandos:\n* Andar();\n*Virar('Esquerda');\n*Virar('Direita');\n*Pegar(); ";
+        }
+
+    }
+
+    public void Voltar(bool vol) {
+        voltarPainel.SetActive(vol);
     }
 
     public void SairQuest()
@@ -314,10 +384,9 @@ public class UIGamePlay : MonoBehaviour {
         painelQuest.SetActive(false);
         painelGame.SetActive(true);
         mapa2.SetActive(true);
-        mapa1.SetActive(false);
-        for (int i = 0; i < fases.Length; i++)
+        for (int i = 0; i < mapa1.Length; i++)
         {
-            fases[i].SetActive(false);
+            mapa1[i].SetActive(false);
         }
     }
 
@@ -341,6 +410,7 @@ public class UIGamePlay : MonoBehaviour {
                                                     DateTime.Now.Year.ToString()
                                                     );
         Sal(false, 1);
+        StartCoroutine("Salvo");
     }
 
     public void Jogar(int idSave)
@@ -351,19 +421,28 @@ public class UIGamePlay : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
 
-        if(pausado == true)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (gameController.CurrentState == StateMachine.INQUEST)
             {
-                Pausar(false);
-            }
-        }else
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
+                if(voltarPainel.activeSelf == true)
+                {
+                    Voltar(false);
+                }else
+                {
+                    Voltar(true);
+                }
+            }else
             {
-                Pausar(true);
+                if(pausado == true)
+                {
+                    Pausar(false);
+                }else
+                {
+                    Pausar(true);
+                }
             }
         }
 
@@ -420,6 +499,22 @@ public class UIGamePlay : MonoBehaviour {
     {
         this.c = c;
         CarPainel.gameObject.SetActive(ativarS);
+    }
+
+    IEnumerator Salvo()
+    {
+        salvoText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        salvo = false;
+        salvoText.gameObject.SetActive(false);
+    }
+
+    IEnumerator SalvoPref()
+    {
+        salvoPrefText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        salvoPref = false;
+        salvoPrefText.gameObject.SetActive(false);
     }
 
 }

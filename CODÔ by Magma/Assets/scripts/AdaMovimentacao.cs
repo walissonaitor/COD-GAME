@@ -10,9 +10,10 @@ public class AdaMovimentacao : MonoBehaviour {
 	private float horizontal;
 	private float vertical;
     private GameController gameController;
+    public GameObject controleFalasInicio;
     private string cenaAtual;
     private Animator anim;
-    public Text textos;
+    public GameObject barreira;
 
     private bool andando;
     private Vector2 posicaoParado;
@@ -25,36 +26,25 @@ public class AdaMovimentacao : MonoBehaviour {
     // Use this for initialization
     void Start () {
         gameController = FindObjectOfType(typeof(GameController)) as GameController;
-        if(PlayerPrefs.GetInt("SAVEATUAL") != 0)
+        if (PlayerPrefs.GetInt("SAVEATUAL") != 0)
         {
                     transform.position = new Vector3(
                     PlayerPrefs.GetFloat("XPOSITIONSAVE" + PlayerPrefs.GetInt("SAVEATUAL")),
                     PlayerPrefs.GetFloat("YPOSITIONSAVE" + PlayerPrefs.GetInt("SAVEATUAL")),
                     PlayerPrefs.GetFloat("ZPOSITIONSAVE" + PlayerPrefs.GetInt("SAVEATUAL"))
                     );
+            controleFalasInicio.SetActive(false);
+        }
+        else
+        {
+            controleFalasInicio.SetActive(true);
         }
         anim = GetComponent<Animator>();
-        tempo = Time.deltaTime;
 	}
-
-    float tempo = 0;
-    float duracao = 3;
-
 	// Update is called once per frame
 	void Update () {
-        tempo += Time.deltaTime;
-        if (PlayerPrefs.GetInt("SAVEATUAL") == 0)
-        {
-            if (tempo < duracao)
-            {
-                textos.gameObject.SetActive(true);
-                textos.text = "Use as teclas W, S, A e D \n para se movimentar pelo mapa";
-            }else if(tempo > duracao && tempo < duracao+1)
-            {
-                textos.gameObject.SetActive(false);
-            }
-        }
-            if (gameController.CurrentState == StateMachine.INGAME)
+
+        if (gameController.CurrentState == StateMachine.INGAME)
         {
             Movimentacao();
         }
@@ -73,7 +63,7 @@ public class AdaMovimentacao : MonoBehaviour {
             posicaoParado = new Vector2(0, vertical);
         }
 
-        if (horizontal > 0 || horizontal < 0)
+        else if (horizontal > 0 || horizontal < 0)
         {
             transform.Translate(horizontal * Time.deltaTime * speed, 0, 0);
             andando = true;
@@ -86,4 +76,21 @@ public class AdaMovimentacao : MonoBehaviour {
         anim.SetFloat("paradoX", posicaoParado.x);
         anim.SetFloat("paradoY", posicaoParado.y);
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Barreira")
+        {
+            barreira.SetActive(true);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Barreira")
+        {
+            barreira.SetActive(false);
+        }
+    }
+
 }

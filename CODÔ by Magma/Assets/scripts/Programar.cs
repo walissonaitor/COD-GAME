@@ -19,7 +19,9 @@ public class Programar : MonoBehaviour
     public InputField inputFieldFunc2;
     public Button botaoExecutar;
     public Button botaoParar;
-
+    public GameObject canvas;
+    public GameObject erroFala;
+    public GameObject falafim;
     private string [] comandosM, comandosF1, comandosF2;
     private int[] executados = {0,0,0};
     private bool executar = false;
@@ -54,6 +56,9 @@ public class Programar : MonoBehaviour
         {
             if (executar == true)
             {
+                inputFieldMain.interactable = false;
+                inputFieldFunc1.interactable = false;
+                inputFieldFunc2.interactable = false;
                 switch (direcao)
                 {
                     case Direcao.NORTE:
@@ -110,7 +115,22 @@ public class Programar : MonoBehaviour
                             case "Pegar()":
                                 if (chegou == true)
                                 {
-                                    gameController.CurrentState = StateMachine.CORRETO;
+                                    if (PlayerPrefs.GetInt("ULTIMAFASE") == 1)
+                                    {
+                                        canvas.GetComponent<UIGamePlay>().EntrarQuest(1);
+                                        PlayerPrefs.SetInt("ULTIMAFASE", 2);
+                                    }
+                                    else if (PlayerPrefs.GetInt("ULTIMAFASE") == 2)
+                                    {
+                                        canvas.GetComponent<UIGamePlay>().EntrarQuest(2);
+                                        PlayerPrefs.SetInt("ULTIMAFASE", 3);
+                                    }
+                                    else if (PlayerPrefs.GetInt("ULTIMAFASE") == 3)
+                                    {
+                                        falafim.SetActive(true);
+                                        PlayerPrefs.SetInt("ULTIMAFASE", 4);
+                                    }
+                                    executar = false;
                                 }
                                 else
                                 {
@@ -147,6 +167,9 @@ public class Programar : MonoBehaviour
                 executados[0] = 0;
                 executados[1] = 0;
                 executados[2] = 0;
+                inputFieldMain.interactable = true;
+                inputFieldFunc1.interactable = true;
+                inputFieldFunc2.interactable = true;
                 direcao = Direcao.LESTE;
                 anim.SetBool("andando", false);
                 anim.SetFloat("paradoX", 1);
@@ -270,10 +293,7 @@ public class Programar : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "ColisaoDesafio")
-        {
-            gameController.CurrentState = StateMachine.ERRADO;
-        }else if (other.tag == "ColisaoFinal")
+        if (other.tag == "ColisaoFinal")
         {
             chegou = true;
         }

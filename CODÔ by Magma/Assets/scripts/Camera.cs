@@ -18,8 +18,6 @@ public class Camera : MonoBehaviour {
 	}
 
     void Follow() {
-        positionTarget = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
-        Vector3 tempPosition = Vector3.Lerp(transform.position, positionTarget, speed);
-        transform.position = tempPosition;
+        transform.position = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
     }
 }

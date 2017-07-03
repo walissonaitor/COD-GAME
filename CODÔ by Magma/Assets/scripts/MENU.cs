@@ -55,6 +55,9 @@ public class MENU : MonoBehaviour
     public GameObject nome5;
     [Space(20)]
 
+    public Text salvoText;
+
+    private bool salvo = false;
     private string nomeDaCena;
     private float VOLUMEMUSICA;
     private float VOLUMESOM;
@@ -271,11 +274,33 @@ public class MENU : MonoBehaviour
         //PlayerPrefs.SetInt("RESOLUCAO", Resolucoes.value);
         //resolucaoSalveIndex = Resolucoes.value;
         AplicarPreferencias();
+        StartCoroutine("Salvo");
     }
     private void AplicarPreferencias()
     {
         VOLUMEMUSICA = PlayerPrefs.GetFloat("VOLUMEMUSICA");
         VOLUMESOM = PlayerPrefs.GetFloat("VOLUMESOM");
+        if (PlayerPrefs.HasKey("modoJanela"))
+        {
+            modoJanelaAtivo = PlayerPrefs.GetInt("modoJanela");
+            if (modoJanelaAtivo == 1)
+            {
+                Screen.fullScreen = false;
+                CaixaModoJanela.isOn = true;
+            }
+            else
+            {
+                Screen.fullScreen = true;
+                CaixaModoJanela.isOn = false;
+            }
+        }
+        else
+        {
+            modoJanelaAtivo = 0;
+            PlayerPrefs.SetInt("modoJanela", modoJanelaAtivo);
+            CaixaModoJanela.isOn = false;
+            Screen.fullScreen = true;
+        }
     }
 
     //===========VOIDS NORMAIS=========//
@@ -290,9 +315,18 @@ public class MENU : MonoBehaviour
     {
         if (idSave == 0)
         {
+            PlayerPrefs.SetInt("USOUE", 0);
             PlayerPrefs.SetInt("ULTIMAFASE", 0);
         }
         PlayerPrefs.SetInt("SAVEATUAL", idSave);
         SceneManager.LoadScene(nomeCenaJogo);
     }
+
+    IEnumerator Salvo() {
+        salvoText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        salvo = false;
+        salvoText.gameObject.SetActive(false);
+    }
+
 }

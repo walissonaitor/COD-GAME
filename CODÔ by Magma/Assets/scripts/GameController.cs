@@ -9,8 +9,7 @@ public enum StateMachine
     INGAME,
     PAUSED,
     INQUEST,
-    CORRETO,
-    ERRADO
+    INFALA
 }
 
 public class GameController : MonoBehaviour {
@@ -49,14 +48,6 @@ public class GameController : MonoBehaviour {
                     break;
                 }
             case StateMachine.INQUEST:
-                {
-                    break;
-                }
-            case StateMachine.CORRETO:
-                {
-                    break;
-                }
-            case StateMachine.ERRADO:
                 {
                     break;
                 }
