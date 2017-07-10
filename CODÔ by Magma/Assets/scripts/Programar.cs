@@ -20,8 +20,8 @@ public class Programar : MonoBehaviour
     public Button botaoExecutar;
     public Button botaoParar;
     public GameObject canvas;
-    public GameObject erroFala;
-    public GameObject falafim;
+    public GameObject falaFim;
+    public GameObject falaErro;
     private string [] comandosM, comandosF1, comandosF2;
     private int[] executados = {0,0,0};
     private bool executar = false;
@@ -127,7 +127,7 @@ public class Programar : MonoBehaviour
                                     }
                                     else if (PlayerPrefs.GetInt("ULTIMAFASE") == 3)
                                     {
-                                        falafim.SetActive(true);
+                                        falaFim.SetActive(true);
                                         PlayerPrefs.SetInt("ULTIMAFASE", 4);
                                     }
                                     executar = false;
@@ -164,6 +164,7 @@ public class Programar : MonoBehaviour
                 transform.position = new Vector3(PlayerPrefs.GetFloat("PosicaoInicialX"), PlayerPrefs.GetFloat("PosicaoInicialY"), PlayerPrefs.GetFloat("PosicaoInicialZ"));
                 botaoExecutar.gameObject.SetActive(true);
                 botaoParar.gameObject.SetActive(false);
+                chegou = false;
                 executados[0] = 0;
                 executados[1] = 0;
                 executados[2] = 0;
@@ -175,8 +176,7 @@ public class Programar : MonoBehaviour
                 anim.SetFloat("paradoX", 1);
                 anim.SetFloat("paradoY", 0);
             }
-        }
-        
+        }  
     }
 
     public void Parar()
@@ -293,7 +293,13 @@ public class Programar : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "ColisaoFinal")
+        if(other.tag == "ColisaoDesafio")
+        {
+            falaErro.SetActive(true);
+            executar = false;
+        }
+
+        else if (other.tag == "ColisaoFinal")
         {
             chegou = true;
         }

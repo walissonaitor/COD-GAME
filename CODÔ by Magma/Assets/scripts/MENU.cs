@@ -310,6 +310,12 @@ public class MENU : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Sair(true);
+        }
+
     }
     public void Jogar(int idSave)
     {
@@ -317,6 +323,7 @@ public class MENU : MonoBehaviour
         {
             PlayerPrefs.SetInt("USOUE", 0);
             PlayerPrefs.SetInt("ULTIMAFASE", 0);
+            PlayerPrefs.SetInt("USOUE", 0);
         }
         PlayerPrefs.SetInt("SAVEATUAL", idSave);
         SceneManager.LoadScene(nomeCenaJogo);

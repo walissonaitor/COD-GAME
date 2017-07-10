@@ -8,8 +8,7 @@ public enum StateMachine
     STARTGAME,
     INGAME,
     PAUSED,
-    INQUEST,
-    INFALA
+    INQUEST
 }
 
 public class GameController : MonoBehaviour {

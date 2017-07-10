@@ -102,10 +102,12 @@ public class UIGamePlay : MonoBehaviour {
     private float VOLUMEMUSICA;
     private int modoJanelaAtivo;
     private bool telaCheiaAtivada;
-    private Transform player; //panda;
+    public Transform player , panda;
     private GameController gameController;
     private bool pausado = false;
     private bool naquest = false;
+    public Transform camera;
+    float xc, yc;
 
     void Awake()
     {
@@ -326,6 +328,8 @@ public class UIGamePlay : MonoBehaviour {
 
     public void EntrarQuest(int idQuest)
     {
+        xc = player.position.x;
+        yc = player.position.y;
         naquest = true;
         executar.gameObject.SetActive(true);
         parar.gameObject.SetActive(true);
@@ -384,6 +388,10 @@ public class UIGamePlay : MonoBehaviour {
         painelQuest.SetActive(false);
         painelGame.SetActive(true);
         mapa2.SetActive(true);
+        camera.position = new Vector3(xc, yc, camera.position.z);
+        Quest1.SetActive(false);
+        Quest2.SetActive(false);
+        Quest3.SetActive(false);
         for (int i = 0; i < mapa1.Length; i++)
         {
             mapa1[i].SetActive(false);
@@ -400,9 +408,9 @@ public class UIGamePlay : MonoBehaviour {
         PlayerPrefs.SetFloat("XPOSITIONSAVE" + id, player.transform.position.x);
         PlayerPrefs.SetFloat("YPOSITIONSAVE" + id, player.transform.position.y);
         PlayerPrefs.SetFloat("ZPOSITIONSAVE" + id, player.transform.position.z);
-        //PlayerPrefs.SetFloat("XPANDAPOSITIONSAVE" + id, panda.transform.position.x);
-        //PlayerPrefs.SetFloat("YPANDAPOSITIONSAVE" + id, panda.transform.position.y);
-        //PlayerPrefs.SetFloat("ZPANDAPOSITIONSAVE" + id, panda.transform.position.z);
+        PlayerPrefs.SetFloat("XPANDAPOSITIONSAVE" + id, panda.transform.position.x);
+        PlayerPrefs.SetFloat("YPANDAPOSITIONSAVE" + id, panda.transform.position.y);
+        PlayerPrefs.SetFloat("ZPANDAPOSITIONSAVE" + id, panda.transform.position.z);
         PlayerPrefs.SetString("NAMESAVE" + id, "Missão");
         PlayerPrefs.SetString("TIMESAVE" + id, DateTime.Now.ToShortTimeString());
         PlayerPrefs.SetString("DATESAVE" + id, DateTime.Now.Day.ToString() + "/" +

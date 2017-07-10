@@ -13,7 +13,9 @@ public class AdaMovimentacao : MonoBehaviour {
     public GameObject controleFalasInicio;
     private string cenaAtual;
     private Animator anim;
-    public GameObject barreira;
+    public Animator animp;
+    public GameObject controleFalasBarreira;
+    public Vector3 posicao;
 
     private bool andando;
     private Vector2 posicaoParado;
@@ -37,6 +39,7 @@ public class AdaMovimentacao : MonoBehaviour {
         }
         else
         {
+            PlayerPrefs.SetInt("USOUE", 0);
             controleFalasInicio.SetActive(true);
         }
         anim = GetComponent<Animator>();
@@ -69,7 +72,7 @@ public class AdaMovimentacao : MonoBehaviour {
             andando = true;
             posicaoParado = new Vector2(horizontal, 0);
         }
-        
+
         anim.SetBool("andando", andando);
         anim.SetFloat("posicaoX", horizontal);
         anim.SetFloat("posicaoY", vertical);
@@ -81,7 +84,7 @@ public class AdaMovimentacao : MonoBehaviour {
     {
         if (other.tag == "Barreira")
         {
-            barreira.SetActive(true);
+            controleFalasBarreira.SetActive(true);
         }
     }
 
@@ -89,8 +92,18 @@ public class AdaMovimentacao : MonoBehaviour {
     {
         if (other.tag == "Barreira")
         {
-            barreira.SetActive(false);
+            controleFalasBarreira.SetActive(false);
         }
+    }
+
+    float GetHorizontal()
+    {
+        return horizontal;
+    }
+
+    float GetVertical()
+    {
+        return vertical;
     }
 
 }

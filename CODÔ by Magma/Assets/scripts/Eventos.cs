@@ -30,7 +30,7 @@ public class Eventos : MonoBehaviour {
                 {
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        uIGamePlay.EntrarQuest(idEvento - 1);
+                        uIGamePlay.EntrarQuest(idEvento);
                         PlayerPrefs.SetInt("ULTIMAFASE", idEvento);
                         PlayerPrefs.SetInt("USOUE", 1);
                     }
@@ -56,7 +56,8 @@ public class Eventos : MonoBehaviour {
         {
             if (PlayerPrefs.GetInt("USOUE") == 0)
             {
-                falasEntrou.SetActive(false); 
+                falasEntrou.SetActive(false);
+                falasEntrou.GetComponent<ControleFalas>().id = 0;
             }
             evento = false;
         }

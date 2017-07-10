@@ -5,47 +5,46 @@ using UnityEngine.UI;
 
 public class ControleFalas : MonoBehaviour {
 
-    public GameObject[] falas;
+    public string[] falas;
+    public string[] nomes;
+    public Color[] cores;
+    public Text nomeText;
+    public Text falaText;
     public int id = 0;
     private GameController gameController;
     public Button passar;
-    private StateMachine status;
 
     // Use this for initialization
-    void Start () {
-        for(int i = 0; i < falas.Length; i++)
-        {
-            falas[i].SetActive(false);
-        }
+    void Start ()
+    {  
         gameController = FindObjectOfType(typeof(GameController)) as GameController;
-        mostrarFala();
-
-        status = gameController.CurrentState;
         passar.onClick = new Button.ButtonClickedEvent();
         passar.onClick.AddListener(() => mostrarFala());
-        gameController.CurrentState = StateMachine.INFALA;
     }
 	
 	// Update is called once per frame
-	void Update () {
-	}
+	void Update ()
+    {
+        if (gameController.CurrentState != StateMachine.PAUSED)
+        {
+            nomeText.fontSize = 20;
+            falaText.fontSize = 20;
+            nomeText.resizeTextMaxSize = 20;
+            falaText.resizeTextMaxSize = 20;
+            nomeText.text = nomes[id];
+            falaText.text = falas[id];
+            nomeText.color = cores[id]; 
+        }
+    }
 
     public void mostrarFala()
     {
-        for (int i = 0; i < falas.Length; i++)
+        if (id < (falas.Length-1))
         {
-            falas[i].SetActive(false);
-        }
-
-        if (id < falas.Length)
-        {
-            falas[id].SetActive(true);
             id++;
-            gameController.CurrentState = StateMachine.INFALA;
         }
         else
-        {
-            gameController.CurrentState = status;
+        { 
             gameObject.SetActive(false);
             id = 0;
         }
